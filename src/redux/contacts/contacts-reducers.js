@@ -1,15 +1,9 @@
-// Редюсер (reducer) - это функция, которая принимает текущее состояние и экшен в качестве аргументов и возвращает новое состояние. Редюсер определяет, как изменяется состояние приложения в ответ на экшены, отправленные в стор.
-import { ADD_CONTACT, DELETE_CONTACT } from './contacts-types';
+//Функция createReducer() упрощает процесс объявления редюсеров.
+// [addContact] квадратные скобки обеспечивают приведение переменной к строке, поэтому подставятся название тайпа.
+import { createReducer } from '@reduxjs/toolkit';
+import { addContact, deleteContact } from './contacts-actions';
 
-export const contactsReducer = (state = [], { type, payload }) => {
-  switch (type) {
-    case ADD_CONTACT:
-      return [...state, payload];
-
-    case DELETE_CONTACT:
-      return state.filter(contact => contact.id !== payload);
-
-    default:
-      return state;
-  }
-};
+export const contactsReducer = createReducer([], {
+  [addContact]: (state, { payload }) => [...state, payload],
+  [deleteContact]: (state, payload) => state.filter(({ id }) => id !== payload),
+});

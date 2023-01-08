@@ -1,17 +1,7 @@
-// Экшены - это объекты, которые передают данные из компонентов в стор, тем самым сигнализируя о том, какое событие произошло в интерфейсе. Они являются единственным источником информации для стора.
-
+// Функция createAction(type) упрощает процесс объявления экшенов. В качестве аргумента она принимает строку описывающую тип действия и возвращает генератор экшена.
+//тайпы оставляем потому что они есть, а так в туллкит они не мспользуются, а просто сразу прописываются в экшенах
+import { createAction } from '@reduxjs/toolkit';
 import { ADD_CONTACT, DELETE_CONTACT } from './contacts-types';
 
-export const addContact = contact => {
-  return {
-    type: ADD_CONTACT,
-    payload: contact,
-  };
-};
-
-export const deleteContact = id => {
-  return {
-    type: DELETE_CONTACT,
-    payload: id,
-  };
-};
+export const addContact = createAction(ADD_CONTACT);
+export const deleteContact = createAction(DELETE_CONTACT);

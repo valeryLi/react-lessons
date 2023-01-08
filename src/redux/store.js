@@ -1,4 +1,4 @@
-// Объект, который содержит полное состояние приложения, методы доступа к состоянию и отправки экшенов. В приложении может быть только один стор.
+// Redux Toolkit предоставляет функцию configureStore(options), которая оборачивает оригинальный createStore(), единственным аргументом ожидает объект параметров и настраивает некоторые полезные инструменты разработки как часть процесса создания стора.
 import { createStore, combineReducers } from 'redux';
 import { devToolsEnhancer } from '@redux-devtools/extension';
 import { contactsReducer } from './contacts/contacts-reducers';
