@@ -1,13 +1,23 @@
 // Redux Toolkit предоставляет функцию configureStore(options), которая оборачивает оригинальный createStore(), единственным аргументом ожидает объект параметров и настраивает некоторые полезные инструменты разработки как часть процесса создания стора.
-import { createStore, combineReducers } from 'redux';
-import { devToolsEnhancer } from '@redux-devtools/extension';
-import { contactsReducer } from './contacts/contacts-reducers';
-import { filterReducer } from './filter/filter-reducers';
 
-const rootReducer = combineReducers({
-  contacts: contactsReducer,
-  filter: filterReducer,
+import { configureStore } from '@reduxjs/toolkit';
+import contactsReducer from './contacts/contactsSlice';
+import filterReducer from './filter/filterSlice';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+
+const persistConfig = {
+  key: 'contacts',
+  storage,
+};
+
+const persistedReducer = persistReducer(persistConfig, contactsReducer);
+
+export const store = configureStore({
+  reducer: {
+    contacts: persistedReducer,
+    filter: filterReducer,
+  },
 });
 
-const enhancer = devToolsEnhancer();
-export const store = createStore(rootReducer, enhancer);
+export const persistor = persistStore(store);
