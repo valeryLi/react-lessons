@@ -1,25 +1,51 @@
-// При проектировании, структура состояния Redux делится на слайсы (slice, часть), за каждый из которых отвечает отдельный редюсер.
-// Функция createSlice() это надстройка над createAction() и createReducer(), которая стандартизирует и еще больше упрощает объявление слайса.
-// Если в других случаях нельзя мутировать стейт, то в случае со слайсом - можно.(т.к. библиотека сама создает копию стейта)
-
+import {
+  fetchContacts,
+  deleteContact,
+  addContact,
+} from './contacts-operations';
 import { createSlice } from '@reduxjs/toolkit';
-
-const initialState = {
-  contacts: [],
-};
 
 const contactsSlice = createSlice({
   name: 'contacts',
-  initialState,
-  reducers: {
-    addContact: (state, { payload }) => {
-      state.contacts.push(payload);
+  initialState: { items: [], isLoading: false, error: null },
+  extrareducers: {
+    [fetchContacts.pending]: state => {
+      state.isLoading = true;
     },
-    deleteContact: (state, { payload }) => {
-      state.contacts = state.contacts.filter(({ id }) => id !== payload);
+    [fetchContacts.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.items = payload;
+      state.error = null;
+    },
+    [fetchContacts.rejected]: (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
+    },
+    [deleteContact.pending]: state => {
+      state.isLoading = true;
+    },
+    [deleteContact.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.error = null;
+      state.items = state.items.filter(({ id }) => id !== payload);
+    },
+    [deleteContact.rejected]: (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
+    },
+    [addContact.pending]: state => {
+      state.isLoading = true;
+    },
+    [addContact.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.error = null;
+      state.items = state.items.push;
+    },
+    [addContact.rejected]: (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
     },
   },
 });
 
-export const { addContact, deleteContact } = contactsSlice.actions;
 export default contactsSlice.reducer;
