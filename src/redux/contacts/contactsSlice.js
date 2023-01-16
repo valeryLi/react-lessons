@@ -9,7 +9,6 @@ const initialState = {
   items: [],
   isLoading: false,
   error: null,
-  filter: '',
 };
 
 const contactsSlice = createSlice({
@@ -68,6 +67,53 @@ const contactsSlice = createSlice({
 
 export default contactsSlice.reducer;
 
+// Операции с использованием экстра-редюсера и слайса, без addMatcher
+// const contactsSlice = createSlice({
+//   name: 'contacts',
+//   initialState,
+//   extraReducers: builder =>
+//     builder
+//       .addCase(fetchContacts.pending, state => {
+//         state.isLoading = true;
+//       })
+//       .addCase(fetchContacts.fulfilled, (state, { payload }) => {
+//         state.isLoading = false;
+//         state.items = payload;
+//         state.error = null;
+//       })
+//       .addCase(fetchContacts.rejected, (state, { payload }) => {
+//         state.isLoading = false;
+//         state.error = payload;
+//       })
+//       .addCase(addContact.pending, state => {
+//         state.isLoading = true;
+//       })
+//       .addCase(addContact.fulfilled, (state, { payload }) => {
+//         state.isLoading = false;
+//         state.error = null;
+//         state.items = [...state.items, payload];
+//       })
+//       .addCase(addContact.rejected, (state, { payload }) => {
+//         state.isLoading = false;
+//         state.error = payload;
+//       })
+//       .addCase(deleteContact.pending, state => {
+//         state.isLoading = true;
+//       })
+//       .addCase(deleteContact.fulfilled, (state, { payload }) => {
+//         state.isLoading = false;
+//         state.error = null;
+//         state.items = state.items.filter(({ id }) => id !== payload);
+//       })
+//       .addCase(deleteContact.rejected, (state, { payload }) => {
+//         state.isLoading = false;
+//         state.error = payload;
+//       }),
+// });
+
+// export default contactsSlice.reducer;
+
+// Операции с использованием экстра-редюсера и слайса, без оптимизации
 // const contactsSlice = createSlice({
 //   name: 'contacts',
 //   initialState,

@@ -23,6 +23,7 @@ export const ContactList = () => {
   const filtredContacts = contacts.filter(({ name }) =>
     name.toLowerCase().includes(filter)
   );
+
   return (
     <>
       {isLoading && <Loader />}
